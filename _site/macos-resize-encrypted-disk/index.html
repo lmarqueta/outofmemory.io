@@ -7,17 +7,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
-  <title>Test markdown</title>
+  <title>Resize encrypted disk in macOS</title>
 
   <meta name="author" content="Out of Memory" />
 
-  
-  <meta name="description" content="Each post also has a subtitle">
   
 
   <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="https://outofmemory.io/feed.xml" />
 
   
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35700985-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-35700985-2');
+</script>
+
 
   
 
@@ -61,19 +69,23 @@
   
 
   
-  <meta property="og:title" content="Test markdown" />
+  <meta property="og:title" content="Resize encrypted disk in macOS" />
   
 
    
-  <meta property="og:description" content="Each post also has a subtitle">
+  <meta property="og:description" content="To increase size of volume Encrypted in 250 MB:
+
+hdiutil resize -size 250m /Users/me/Encrypted/Encrypted.dmg
+
+">
   
 
 
   <meta property="og:type" content="website" />
 
   
-  <meta property="og:url" content="https://outofmemory.io/2015-02-28-test-markdown/" />
-  <link rel="canonical" href="https://outofmemory.io/2015-02-28-test-markdown/" />
+  <meta property="og:url" content="https://outofmemory.io/macos-resize-encrypted-disk/" />
+  <link rel="canonical" href="https://outofmemory.io/macos-resize-encrypted-disk/" />
   
 
   
@@ -87,11 +99,15 @@
   <meta name="twitter:creator" content="@" />
 
   
-  <meta name="twitter:title" content="Test markdown" />
+  <meta name="twitter:title" content="Resize encrypted disk in macOS" />
   
 
   
-  <meta name="twitter:description" content="Each post also has a subtitle">
+  <meta name="twitter:description" content="To increase size of volume Encrypted in 250 MB:
+
+hdiutil resize -size 250m /Users/me/Encrypted/Encrypted.dmg
+
+">
   
 
   
@@ -122,6 +138,7 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+          <li><a href="/tags">Tags</a></li>
           <li><a href="/about">About</a></li></ul>
     </div>
 
@@ -152,15 +169,11 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>Test markdown</h1>
-		  
-		    
-			<h2 class="post-subheading">Each post also has a subtitle</h2>
-			
+          <h1>Resize encrypted disk in macOS</h1>
 		  
 		  
 		  
-		  <span class="post-meta">Posted on February 28, 2015</span>
+		  <span class="post-meta">Posted on July 7, 2017</span>
 		  
         </div>
       </div>
@@ -178,119 +191,12 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
       
-        
-        
-        
-
-        <div id="header-gh-btns">
-          
-            
-              
-                  <iframe src="https://ghbtns.com/github-btn.html?user=daattali&repo=beautiful-jekyll&type=star&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
-                
-            
-              
-                  <iframe src="https://ghbtns.com/github-btn.html?user=daattali&repo=beautiful-jekyll&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
-                
-            
-              
-                  <iframe src="https://ghbtns.com/github-btn.html?user=daattali&type=follow&count=true" frameborder="0" scrolling="0" width="220px" height="20px"></iframe>
-              
-            
-          
-        </div>
-      
 
       <article role="main" class="blog-post">
-        <p>You can write regular <a href="http://markdowntutorial.com/">markdown</a> here and Jekyll will automatically convert it to a nice webpage.  I strongly encourage you to <a href="http://markdowntutorial.com/">take 5 minutes to learn how to write in markdown</a> - it’ll teach you how to transform regular text into bold/italics/headings/tables/etc.</p>
+        <p>To increase size of volume <code class="highlighter-rouge">Encrypted</code> in 250 MB:</p>
 
-<p><strong>Here is some bold text</strong></p>
-
-<h2 id="here-is-a-secondary-heading">Here is a secondary heading</h2>
-
-<p>Here’s a useless table:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Number</th>
-      <th style="text-align: left">Next number</th>
-      <th style="text-align: left">Previous number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">Five</td>
-      <td style="text-align: left">Six</td>
-      <td style="text-align: left">Four</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Ten</td>
-      <td style="text-align: left">Eleven</td>
-      <td style="text-align: left">Nine</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Seven</td>
-      <td style="text-align: left">Eight</td>
-      <td style="text-align: left">Six</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Two</td>
-      <td style="text-align: left">Three</td>
-      <td style="text-align: left">One</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>How about a yummy crepe?</p>
-
-<p><img src="https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg" alt="Crepe" /></p>
-
-<p>It can also be centered!</p>
-
-<p><img src="https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg" alt="Crepe" class="center-block" /></p>
-
-<p>Here’s a code chunk:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hdiutil resize <span class="nt">-size</span> 250m /Users/me/Encrypted/Encrypted.dmg
 </code></pre></div></div>
-
-<p>And here is the same code with syntax highlighting:</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nx">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>And here is the same code yet again but with line numbers:</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nx">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<h2 id="boxes">Boxes</h2>
-<p>You can add notification, warning and error boxes like this:</p>
-
-<h3 id="notification">Notification</h3>
-
-<p class="box-note"><strong>Note:</strong> This is a notification box.</p>
-
-<h3 id="warning">Warning</h3>
-
-<p class="box-warning"><strong>Warning:</strong> This is a warning box.</p>
-
-<h3 id="error">Error</h3>
-
-<p class="box-error"><strong>Error:</strong> This is an error box.</p>
 
       </article>
 
@@ -299,7 +205,7 @@ foo(3)
           Tags:
           
           
-            <a href="/tags#test">test</a>
+            <a href="/tags#macOS">macOS</a>
           
           
         </div>
@@ -316,7 +222,7 @@ foo(3)
 
   
   <!--- Share on Twitter -->
-    <a href="https://twitter.com/intent/tweet?text=Test+markdown&url=https%3A%2F%2Foutofmemory.io%2F2015-02-28-test-markdown%2F"
+    <a href="https://twitter.com/intent/tweet?text=Resize+encrypted+disk+in+macOS&url=https%3A%2F%2Foutofmemory.io%2Fmacos-resize-encrypted-disk%2F"
       class="btn btn-social-icon btn-twitter" title="Share on Twitter">
       <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
       <span class="sr-only">Twitter</span>
@@ -324,7 +230,21 @@ foo(3)
   
 
   
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fmacos-resize-encrypted-disk%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
 
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fmacos-resize-encrypted-disk%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
   
 
 </section>
@@ -335,9 +255,13 @@ foo(3)
 
       <ul class="pager blog-pager">
         
+        <li class="previous">
+          <a href="/powershell-controls/" data-toggle="tooltip" data-placement="top" title="Saltándose los controles de la Powershell">&larr; Previous Post</a>
+        </li>
+        
         
         <li class="next">
-          <a href="/2015-06-08-netcat-primer/" data-toggle="tooltip" data-placement="top" title="Uso de netcat">Next Post &rarr;</a>
+          <a href="/welcome-to-jekyll/" data-toggle="tooltip" data-placement="top" title="Welcome to Jekyll!">Next Post &rarr;</a>
         </li>
         
       </ul>

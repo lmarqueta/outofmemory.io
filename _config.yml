@@ -20,6 +20,7 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
+  Tags: "tags"
   About: "about"
   # Resources:
   #  - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
@@ -88,8 +89,8 @@ social-network-links:
 # Select which share links to show in posts
 share-links-active:
   twitter: true
-  facebook: false
-  linkedin: false
+  facebook: true
+  linkedin: true
 
 # How to display the link to the website in the footer
 # Remove this if you don't want a link in the footer
@@ -98,7 +99,7 @@ url-pretty: "outofmemory.io"  # eg. "deanattali.com/beautiful-jekyll"
 # --- Web Statistics Section --- #
 
 # Fill in your Google Analytics gtag.js ID to track your website using gtag
-#gtag: ""
+gtag: "UA-35700985-2"
 
 # Fill in your Google Analytics ID to track your website using GA
 #google_analytics: ""
@@ -118,7 +119,7 @@ url-pretty: "outofmemory.io"  # eg. "deanattali.com/beautiful-jekyll"
 # --- Comments --- #
 
 # Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
-# disqus: ""
+# disqus: "lmarqueta"
 
 # If you want to use JustComments fill with the API Key
 #just-comments: "ABCD-EFGH-IJKL"
@@ -156,10 +157,10 @@ date_format: "%B %-d, %Y"
 # --- Don't need to touch anything below here (but you can if you want) --- #
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Vancouver"
+timezone: "Europe/Madrid"
 markdown: kramdown
 highlighter: rouge
-permalink: /:year-:month-:day-:title/
+permalink: /:title/
 paginate: 5
 
 kramdown:
