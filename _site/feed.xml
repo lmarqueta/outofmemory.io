@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>outofmemory.io</title>
+    <description>You can't always apt-get what you want</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>OS lifecycle</title>
+        <description>
+          Release and EOL/EOSL dates for most common Operating Systems - 
+          Warning: Use at your own risk. CentOS OS name Release date EOL EOSL         Debian OS name Release date EOL EOSL         Red Hat OS name Release date EOL EOSL         Ubuntu OS name Release date EOL EOSL      ...
+        </description>
+        <pubDate>Sat, 21 Sep 2019 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2019-09-21-os-lifecycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-09-21-os-lifecycle/</guid>
+      </item>
+    
+      <item>
+        <title>Welcome to Jekyll!</title>
+        <description>
+          
+          You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when...
+        </description>
+        <pubDate>Fri, 20 Sep 2019 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2019-09-20-welcome-to-jekyll/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019-09-20-welcome-to-jekyll/</guid>
+      </item>
+    
+      <item>
+        <title>Saltándose los controles de la Powershell</title>
+        <description>
+          Mecanismos de bypass para la PowerShell ExecutionPolicy - 
+          En una de las charlas a las que acude con frecuencia -bueno, creo que en varias :)-, Pablo González estuvo explicando diferentes posibilidades para ejecutar scripts en PowerShell “saltándose” los controles de ejecución (ExecutionPolicy). La ExecutionPolicy determina qué scripts PowerShell tienen autorización para ejecutarse en un sistema. Windows ofrece cuatro...
+        </description>
+        <pubDate>Tue, 13 Dec 2016 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2016-12-13-powershell-controls/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016-12-13-powershell-controls/</guid>
+      </item>
+    
+      <item>
+        <title>First post!</title>
+        <description>
+          
+          This is my first post, how exciting!
+
+Note: Why is this called first post when iit is not the first post? Because this is the first Jekyll post.
+
+        </description>
+        <pubDate>Tue, 06 Dec 2016 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2016-12-06-first-post/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016-12-06-first-post/</guid>
+      </item>
+    
+      <item>
+        <title>Reverse shells</title>
+        <description>
+          
+          Situación: encontrado un método de RCE pero sin posibilidad de acceso a la shell. Solución: bind de la shell a un puerto TCP. netcat Esto ya lo vimos hace tiempo en este articulo. Lo que ocurre es que: nc/netcat no siempre estará disponible si lo está, es posible que no...
+        </description>
+        <pubDate>Sat, 12 Nov 2016 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2016-11-12-reverse-shell-cheat-sheet/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016-11-12-reverse-shell-cheat-sheet/</guid>
+      </item>
+    
+      <item>
+        <title>Uso de netcat</title>
+        <description>
+          
+          netcat Netcat es una utilidad que permite el envío y recepción de datos vía TCP/UDP desde la consola. Inicialmente desarrollada para Unix, se ha portado al menos a Windows y OS X. Hay varios forks con distintas capacidades; en resumen, está en todas partes y sirve para… muchas cositas. Sintaxis...
+        </description>
+        <pubDate>Mon, 08 Jun 2015 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2015-06-08-netcat-primer/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015-06-08-netcat-primer/</guid>
+      </item>
+    
+      <item>
+        <title>Test markdown</title>
+        <description>
+          Each post also has a subtitle - 
+          You can write regular markdown here and Jekyll will automatically convert it to a nice webpage. I strongly encourage you to take 5 minutes to learn how to write in markdown - it’ll teach you how to transform regular text into bold/italics/headings/tables/etc. Here is some bold text Here is a...
+        </description>
+        <pubDate>Sat, 28 Feb 2015 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2015-02-28-test-markdown/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015-02-28-test-markdown/</guid>
+      </item>
+    
+  </channel>
+</rss>

