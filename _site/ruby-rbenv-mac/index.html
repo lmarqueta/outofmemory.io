@@ -7,12 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
-  <title>outofmemory.io - You can't always apt-get what you want</title>
+  <title>Ruby (and Jekyll) on Mac</title>
 
   <meta name="author" content="Out of Memory" />
 
   
-  <meta name="description" content="You can't always apt-get what you want">
+  <meta name="description" content="How to install a current version of Ruby on macOS Mojave">
   
 
   <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="http://localhost:4000/feed.xml" />
@@ -71,19 +71,19 @@
   
 
   
-  <meta property="og:title" content="Out of Memory" />
+  <meta property="og:title" content="Ruby (and Jekyll) on Mac" />
   
 
    
-  <meta property="og:description" content="You can't always apt-get what you want">
+  <meta property="og:description" content="How to install a current version of Ruby on macOS Mojave">
   
 
 
   <meta property="og:type" content="website" />
 
   
-  <meta property="og:url" content="http://localhost:4000/page2/" />
-  <link rel="canonical" href="http://localhost:4000/page2/" />
+  <meta property="og:url" content="http://localhost:4000/ruby-rbenv-mac/" />
+  <link rel="canonical" href="http://localhost:4000/ruby-rbenv-mac/" />
   
 
   
@@ -97,11 +97,11 @@
   <meta name="twitter:creator" content="@" />
 
   
-  <meta name="twitter:title" content="Out of Memory" />
+  <meta name="twitter:title" content="Ruby (and Jekyll) on Mac" />
   
 
   
-  <meta name="twitter:description" content="You can't always apt-get what you want">
+  <meta name="twitter:description" content="How to install a current version of Ruby on macOS Mojave">
   
 
   
@@ -140,7 +140,7 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
 	    <a href="http://localhost:4000/">
-	      <img class="avatar-img" src="/img/spectrum.png" />
+	      <img class="avatar-img" src="/img/ruby-logo.png" />
 		</a>
 	  </div>
 	</div>
@@ -162,15 +162,16 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Out of Memory</h1>
+        <div class="post-heading">
+          <h1>Ruby (and Jekyll) on Mac</h1>
 		  
 		    
-            <hr class="small">
-            <span class="page-subheading">You can't always apt-get what you want</span>
+			<h2 class="post-subheading">How to install a current version of Ruby on macOS Mojave</h2>
 			
 		  
 		  
+		  
+		  <span class="post-meta">Posted on September 22, 2019</span>
 		  
         </div>
       </div>
@@ -183,170 +184,157 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <div class="posts-list">
-  
-  <article class="post-preview">
-    <a href="/first-post/">
-	  <h2 class="post-title">First post!</h2>
 
-	  
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://jekyllrb.com">Jekyll</a> requires Ruby 2.4 or higher.
+Trying to install Jekyll on my Macbook I noticed that the version shipped with Mojave is 2.3.something.</p>
+
+<p>There are a couple of ways to solve this.</p>
+
+<p>## Homebrew</p>
+
+<p>The first one is using <a href="https://brew.sh/">homebrew</a>. Provided that you have installed it before, it is just a command away:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install ruby
+</code></pre></div></div>
+
+<p>Don’t forget to set the <code class="highlighter-rouge">PATH</code> environment to make sure that you use the right Ruby version:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/opt/ruby/bin:<span class="nv">$PATH</span>
+ruby <span class="nt">-v</span>
+ruby 2.6.4p104 <span class="o">(</span>2019-08-28 revision 67798<span class="o">)</span> <span class="o">[</span>x86_64-darwin18]
+</code></pre></div></div>
+
+<h2 id="rbenv">rbenv</h2>
+
+<p><a href="https://github.com/rbenv/rbenv">rbenv</a> is a tool commonly used to manage different versions of Ruby, which is quite useful sometimes. Of course it can be installed from homebrew as well:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install rbenv
+rbenv init
+<span class="c"># Add rbenv init to your bash shell environment</span>
+<span class="nb">echo</span> <span class="s1">'eval "$(rbenv init -)"'</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+</code></pre></div></div>
+
+<p>After that, you can install whatever version of Ruby you need. For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv install 2.6.3
+rbenv global 2.6.3
+ruby -v
+ruby 2.6.3p62 (2019-04-16 revision 67580)
+</code></pre></div></div>
+
+<h2 id="installing-jekyll">Installing Jekyll</h2>
+
+<p><img src="/img/jekyll-logo.png" alt="jekyll logo" class="img-responsive" /></p>
+
+<p>In my case Ruby was installed from brew, so I am running 2.6.4. To install Bundler and Jekyll run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install --user-install bundler jekyll
+</code></pre></div></div>
+
+<p>Again, be careful with the environment:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
+gem env
+</code></pre></div></div>
+
+<p>Check that GEM PATHS are ok and you are good to go.</p>
+
+<p>Now move to your shiny Jekyll project folder, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle install
+bundle exec jekyll serve --watch
+bundle exec jekyll build
+</code></pre></div></div>
+
+<p>and you are good to go!</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#macos">macos</a>
+          
+            <a href="/tags#ruby">ruby</a>
+          
+            <a href="/tags#jekyll">jekyll</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Ruby+%28and+Jekyll%29+on+Mac&url=http%3A%2F%2Flocalhost%3A4000%2Fruby-rbenv-mac%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
     </a>
-
-    <p class="post-meta">
-      Posted on December 6, 2016
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        This is my first post, how exciting!
-
-
-        
-        
-          <a href="/first-post/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-
-   </article>
   
-  <article class="post-preview">
-    <a href="/reverse-shell-cheat-sheet/">
-	  <h2 class="post-title">Reverse shells</h2>
 
-	  
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fruby-rbenv-mac%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
     </a>
-
-    <p class="post-meta">
-      Posted on November 12, 2016
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        Reverse shell cheat sheet
-        
-        
-          <a href="/reverse-shell-cheat-sheet/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#shell">shell</a>
-      
-      <a href="/tags#netcat">netcat</a>
-      
-      <a href="/tags#security">security</a>
-      
-      
-    </div>
-    
-
-   </article>
   
-  <article class="post-preview">
-    <a href="/netcat-primer/">
-	  <h2 class="post-title">Uso de netcat</h2>
 
-	  
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fruby-rbenv-mac%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
     </a>
-
-    <p class="post-meta">
-      Posted on June 8, 2015
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        Uso básico de netcat
-        
-        
-          <a href="/netcat-primer/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#netcat">netcat</a>
-      
-      <a href="/tags#nc">nc</a>
-      
-      
-    </div>
-    
-
-   </article>
   
-  <article class="post-preview">
-    <a href="/test-markdown/">
-	  <h2 class="post-title">Test markdown</h2>
 
-	  
-	  <h3 class="post-subtitle">
-	    Each post also has a subtitle
-	  </h3>
-	  
-    </a>
+</section>
 
-    <p class="post-meta">
-      Posted on February 28, 2015
-    </p>
 
-    <div class="post-entry-container">
+
       
-      <div class="post-entry">
-        You can write regular markdown here and Jekyll will automatically convert it to a nice webpage.  I strongly encourage you to take 5 minutes to learn how to write in markdown - it’ll teach you how to transform regular text into bold/italics/headings/tables/etc.
 
-
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/os-lifecycle/" data-toggle="tooltip" data-placement="top" title="OS lifecycle">&larr; Previous Post</a>
+        </li>
         
         
-          <a href="/test-markdown/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
+      </ul>
 
-    
-    <div class="blog-tags">
-      Tags:
       
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
       
-      <a href="/tags#test">test</a>
-      
-      
-    </div>
-    
-
-   </article>
-  
-</div>
-
-
-<ul class="pager main-pager">
-  
-  <li class="previous">
-    <a href="/">&larr; Newer Posts</a>
-  </li>
-  
-  
-</ul>
-
-
-	    
     </div>
   </div>
 </div>
