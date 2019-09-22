@@ -11,7 +11,7 @@ Trying to install Jekyll on my Macbook I noticed that the version shipped with M
 
 There are a couple of ways to solve this.
 
-## Homebrew
+## homebrew
 
 The first one is using [homebrew](https://brew.sh/). Provided that you have installed it before, it is just a command away:
 

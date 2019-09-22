@@ -10,7 +10,7 @@
         <title>Ruby (and Jekyll) on Mac</title>
         <description>
           How to install a current version of Ruby on macOS Mojave - 
-          Jekyll requires Ruby 2.4 or higher. Trying to install Jekyll on my Macbook I noticed that the version shipped with Mojave is 2.3.something. There are a couple of ways to solve this. ## Homebrew The first one is using homebrew. Provided that you have installed it before, it is just a...
+          Jekyll requires Ruby 2.4 or higher. Trying to install Jekyll on my Macbook I noticed that the version shipped with Mojave is 2.3.something. There are a couple of ways to solve this. homebrew The first one is using homebrew. Provided that you have installed it before, it is just a...
         </description>
         <pubDate>Sun, 22 Sep 2019 00:00:00 +0200</pubDate>
         <link>https://outofmemory.io/ruby-rbenv-mac/</link>
