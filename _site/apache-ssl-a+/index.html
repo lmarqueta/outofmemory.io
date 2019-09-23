@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Qualys SSL A+</title>
+
+  <meta name="author" content="Out of Memory" />
+
+  
+  <meta name="description" content="Getting an A+ with Apache and Let's Encrypt">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="https://outofmemory.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35700985-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-35700985-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Qualys SSL A+" />
+  
+
+   
+  <meta property="og:description" content="Getting an A+ with Apache and Let's Encrypt">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://outofmemory.io/apache-ssl-a+/" />
+  <link rel="canonical" href="https://outofmemory.io/apache-ssl-a+/" />
+  
+
+  
+  <meta property="og:image" content="https://outofmemory.io/img/spectrum.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Qualys SSL A+" />
+  
+
+  
+  <meta name="twitter:description" content="Getting an A+ with Apache and Let's Encrypt">
+  
+
+  
+  <meta name="twitter:image" content="https://outofmemory.io/img/spectrum.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://outofmemory.io/">outofmemory.io</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/tags">Tags</a></li>
+          <li><a href="/about">About</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://outofmemory.io/">
+	      <img class="avatar-img" src="/img/spectrum.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Qualys SSL A+</h1>
+		  
+		    
+			<h2 class="post-subheading">Getting an A+ with Apache and Let's Encrypt</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on September 22, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Basic Apache configuration to get an A+ rating in Qualys SSL test.</p>
+
+<p>Background:</p>
+
+<ul>
+  <li>Ubuntu 18.04 LTS</li>
+  <li>Apache 2.4</li>
+  <li>Let’s Encrypt certificates</li>
+</ul>
+
+<h2 id="apache-ssl-module-configuration">Apache SSL module configuration</h2>
+
+<figure class="highlight"><pre><code class="language-conf" data-lang="conf"><span class="c"># Created by certbot
+</span><span class="n">SSLEngine</span> <span class="n">on</span>
+
+<span class="c"># Intermediate configuration, tweak to your needs
+</span><span class="n">SSLProtocol</span>             <span class="n">all</span> -<span class="n">SSLv2</span> -<span class="n">SSLv3</span>
+<span class="n">SSLCipherSuite</span>          <span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">CHACHA20</span>-<span class="n">POLY1305</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">CHACHA20</span>-<span class="n">POLY1305</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES128</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES128</span>-<span class="n">SHA</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">SHA</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES256</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES256</span>-<span class="n">SHA</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">SHA</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">SHA256</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">SHA</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">SHA256</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">SHA</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">DES</span>-<span class="n">CBC3</span>-<span class="n">SHA</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">DES</span>-<span class="n">CBC3</span>-<span class="n">SHA</span>:<span class="n">EDH</span>-<span class="n">RSA</span>-<span class="n">DES</span>-<span class="n">CBC3</span>-<span class="n">SHA</span>:<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">AES128</span>-<span class="n">SHA256</span>:<span class="n">AES256</span>-<span class="n">SHA256</span>:<span class="n">AES128</span>-<span class="n">SHA</span>:<span class="n">AES256</span>-<span class="n">SHA</span>:<span class="n">DES</span>-<span class="n">CBC3</span>-<span class="n">SHA</span>:!<span class="n">DSS</span>
+
+<span class="c"># If only TLSv1.2 is needed:
+# SSLCipherSuite EECDH+AESGCM:EDH+AESGCM
+</span>
+<span class="n">SSLHonorCipherOrder</span>     <span class="n">on</span>
+<span class="n">SSLCompression</span>          <span class="n">off</span>
+
+<span class="n">SSLOptions</span> +<span class="n">StrictRequire</span>
+
+<span class="c"># Add vhost name to log entries:
+</span><span class="n">LogFormat</span> <span class="s2">"%h %l %u %t \"</span>%<span class="n">r</span>\<span class="s2">" %&gt;s %b \"</span>%{<span class="n">Referer</span>}<span class="n">i</span>\<span class="s2">" \"</span>%{<span class="n">User</span>-<span class="n">agent</span>}<span class="n">i</span>\<span class="s2">""</span> <span class="n">vhost_combined</span>
+<span class="n">LogFormat</span> <span class="s2">"%v %h %l %u %t \"</span>%<span class="n">r</span>\<span class="s2">" %&gt;s %b"</span> <span class="n">vhost_common</span>
+
+<span class="c">#CustomLog /var/log/apache2/access.log vhost_combined
+#LogLevel warn
+#ErrorLog /var/log/apache2/error.log
+</span>
+<span class="c"># Always ensure Cookies have "Secure" set (JAH 2012/1)
+</span><span class="err">#</span><span class="n">Header</span> <span class="n">edit</span> <span class="n">Set</span>-<span class="n">Cookie</span> (?<span class="n">i</span>)^(.*)(;\<span class="n">s</span>*<span class="n">secure</span>)??((\<span class="n">s</span>*;)?(.*)) <span class="s2">"$1; Secure$3$4"</span></code></pre></figure>
+
+<h2 id="virtual-hosts">Virtual Hosts</h2>
+
+<figure class="highlight"><pre><code class="language-conf" data-lang="conf">&lt;<span class="n">VirtualHost</span> *:<span class="m">80</span>&gt;
+  <span class="n">ServerName</span> &lt;<span class="n">servername</span>&gt;
+  <span class="n">ServerAlias</span> &lt;<span class="n">serveralias</span>&gt;
+  <span class="n">RewriteEngine</span> <span class="n">On</span>
+  <span class="n">RewriteRule</span> ^/?(.*) <span class="n">https</span>://%{<span class="n">SERVER_NAME</span>}/$<span class="m">1</span> [<span class="n">R</span>,<span class="n">L</span>]
+  <span class="n">RewriteCond</span> %{<span class="n">SERVER_NAME</span>} =&lt;<span class="n">servername</span>&gt; [<span class="n">OR</span>]
+  <span class="n">RewriteCond</span> %{<span class="n">SERVER_NAME</span>} =&lt;<span class="n">serveralias</span>&gt;
+  <span class="n">RewriteRule</span> ^ <span class="n">https</span>://%{<span class="n">SERVER_NAME</span>}%{<span class="n">REQUEST_URI</span>} [<span class="n">END</span>,<span class="n">NE</span>,<span class="n">R</span>=<span class="n">permanent</span>]
+&lt;/<span class="n">VirtualHost</span>&gt;
+
+&lt;<span class="n">VirtualHost</span> *:<span class="m">443</span>&gt;
+  <span class="n">ServerName</span> &lt;<span class="n">servername</span>&gt;
+  <span class="n">ServerAlias</span> &lt;<span class="n">serveralias</span>&gt;
+  <span class="n">DocumentRoot</span> /<span class="n">var</span>/<span class="n">www</span>/&lt;<span class="n">path</span>&gt;
+  <span class="n">Header</span> <span class="n">always</span> <span class="n">set</span> <span class="n">Strict</span>-<span class="n">Transport</span>-<span class="n">Security</span> <span class="s2">"max-age=63072000;"</span>
+  <span class="n">SSLEngine</span> <span class="n">on</span>
+  <span class="n">Include</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">options</span>-<span class="n">ssl</span>-<span class="n">apache</span>.<span class="n">conf</span>
+  <span class="n">SSLCertificateFile</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/&lt;<span class="n">domainname</span>&gt;/<span class="n">fullchain</span>.<span class="n">pem</span>
+  <span class="n">SSLCertificateKeyFile</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/&lt;<span class="n">domainname</span>&gt;/<span class="n">privkey</span>.<span class="n">pem</span>
+&lt;/<span class="n">VirtualHost</span>&gt;</code></pre></figure>
+
+<p>Get the files at <a href="https://gist.github.com/lmarqueta">GIST</a>:</p>
+
+<ul>
+  <li><a href="https://gist.githubusercontent.com/lmarqueta/c83fca0512f546cf6f5e5d1041fc4d77/raw/fd199c7b4345effa5ab0d2c7891a15e4d6ec8d3c/virtualhost.conf">virtualhost.conf</a></li>
+  <li><a href="https://gist.githubusercontent.com/lmarqueta/c83fca0512f546cf6f5e5d1041fc4d77/raw/fd199c7b4345effa5ab0d2c7891a15e4d6ec8d3c/options-ssl-apache.conf">options-ssl-apache.conf</a></li>
+</ul>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#apache">apache</a>
+          
+            <a href="/tags#ssl">ssl</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Qualys+SSL+A%2B&url=https%3A%2F%2Foutofmemory.io%2Fapache-ssl-a%2B%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fapache-ssl-a%2B%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fapache-ssl-a%2B%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/os-lifecycle/" data-toggle="tooltip" data-placement="top" title="OS lifecycle">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ruby-rbenv-mac/" data-toggle="tooltip" data-placement="top" title="Ruby (and Jekyll) on Mac">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:outofmemory.io@protonmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/lmarqueta" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/outofmemory_io" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Out of Memory
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="https://outofmemory.io/">outofmemory.io</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#252e39"
+      },
+      "button": {
+        "background": "#14a7d0"
+      }
+    },
+    "theme": "classic"
+  });
+  </script>
+  </body>
+</html>
