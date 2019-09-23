@@ -7,10 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
-  <title>Welcome to Jekyll!</title>
+  <title>ufw cheat sheet</title>
 
   <meta name="author" content="Out of Memory" />
 
+  
+  <meta name="description" content="The default firewall configuration tool for Ubuntu is ufw">
   
 
   <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="https://outofmemory.io/feed.xml" />
@@ -69,19 +71,19 @@
   
 
   
-  <meta property="og:title" content="Welcome to Jekyll!" />
+  <meta property="og:title" content="ufw cheat sheet" />
   
 
    
-  <meta property="og:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when...">
+  <meta property="og:description" content="The default firewall configuration tool for Ubuntu is ufw">
   
 
 
   <meta property="og:type" content="website" />
 
   
-  <meta property="og:url" content="https://outofmemory.io/welcome-to-jekyll/" />
-  <link rel="canonical" href="https://outofmemory.io/welcome-to-jekyll/" />
+  <meta property="og:url" content="https://outofmemory.io/ufw-cheat-sheet/" />
+  <link rel="canonical" href="https://outofmemory.io/ufw-cheat-sheet/" />
   
 
   
@@ -95,11 +97,11 @@
   <meta name="twitter:creator" content="@" />
 
   
-  <meta name="twitter:title" content="Welcome to Jekyll!" />
+  <meta name="twitter:title" content="ufw cheat sheet" />
   
 
   
-  <meta name="twitter:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when...">
+  <meta name="twitter:description" content="The default firewall configuration tool for Ubuntu is ufw">
   
 
   
@@ -138,7 +140,7 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
 	    <a href="https://outofmemory.io/">
-	      <img class="avatar-img" src="/img/spectrum.png" />
+	      <img class="avatar-img" src="/img/ubuntu-logo.png" />
 		</a>
 	  </div>
 	</div>
@@ -161,11 +163,15 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>Welcome to Jekyll!</h1>
+          <h1>ufw cheat sheet</h1>
+		  
+		    
+			<h2 class="post-subheading">The default firewall configuration tool for Ubuntu is ufw</h2>
+			
 		  
 		  
 		  
-		  <span class="post-meta">Posted on September 20, 2019</span>
+		  <span class="post-meta">Posted on August 8, 2018</span>
 		  
         </div>
       </div>
@@ -185,27 +191,151 @@
       
 
       <article role="main" class="blog-post">
-        <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+        <p>From <a href="https://help.ubuntu.com/community/UFW">Ubuntu help</a>:</p>
 
-<p>Jekyll requires blog post files to be named according to the following format:</p>
+<p>The default firewall configuration tool for Ubuntu is ufw. Developed to ease iptables firewall configuration, ufw provides a user friendly way to create an IPv4 or IPv6 host-based firewall. By default UFW is disabled.</p>
 
-<p><code class="highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+<h2 id="basic-ufw-usage">Basic ufw usage</h2>
 
-<p>Where <code class="highlighter-rouge">YEAR</code> is a four-digit number, <code class="highlighter-rouge">MONTH</code> and <code class="highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+</pre></td><td class="code"><pre><span class="c"># enable UFW</span>
+ufw <span class="nb">enable</span>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<span class="c"># To check the status of UFW:</span>
+ufw status verbose
+ufw status numbered
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<span class="c"># Allow ports:</span>
+ufw allow 80
+ufw allow 443
 
-<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+<span class="c"># Allow ports using /etc/service name:</span>
+ufw allow http
+ufw allow https
+
+<span class="c"># Allow port/protocol:</span>
+ufw allow 53/udp
+
+<span class="c"># Allow port ranges:</span>
+ufw allow 1000:2000/tcp
+
+<span class="c"># Deny (port/protocol):</span>
+ufw deny 53/tcp
+
+<span class="c"># Delete rules:</span>
+<span class="c"># Prepend delete to the rule:</span>
+ufw delete allow http
+ufw delete deny 53/tcp
+
+<span class="c"># Enable/disable logging:</span>
+ufw logging on
+ufw logging off
+
+<span class="c"># Allow from IP/subnet:</span>
+ufw allow from 192.168.1.1
+ufw allow from 192.168.1.0/24
+ufw allow from 192.168.1.0/24 to 127.0.0.1 port 445 proto tcp
+
+<span class="c"># Deny by IP:</span>
+ufw deny from 192.168.1.100
+ufw deny from 192.168.1.0/24
+ufw deny from 192.168.1.0/24 to 127.0.0.1 port 445 proto tcp
+
+<span class="c"># Delete specific rules:</span>
+ufw status numbered
+ufw delete 7
+
+
+<span class="c"># You can reject instead of deny:</span>
+ufw reject 53/tcp
+
+<span class="c"># Reasonable default</span>
+ufw default deny incoming
+ufw default allow outgoing
+
+<span class="c"># Show details:</span>
+ufw show raw
+
+<span class="c"># Start over again:</span>
+ufw reset</pre></td></tr></tbody></table></code></pre></figure>
 
 
       </article>
 
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#iptables">iptables</a>
+          
+            <a href="/tags#security">security</a>
+          
+            <a href="/tags#ubuntu">ubuntu</a>
+          
+            <a href="/tags#ufw">ufw</a>
+          
+          
+        </div>
       
 
       
@@ -219,7 +349,7 @@
 
   
   <!--- Share on Twitter -->
-    <a href="https://twitter.com/intent/tweet?text=Welcome+to+Jekyll%21&url=https%3A%2F%2Foutofmemory.io%2Fwelcome-to-jekyll%2F"
+    <a href="https://twitter.com/intent/tweet?text=ufw+cheat+sheet&url=https%3A%2F%2Foutofmemory.io%2Fufw-cheat-sheet%2F"
       class="btn btn-social-icon btn-twitter" title="Share on Twitter">
       <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
       <span class="sr-only">Twitter</span>
@@ -228,7 +358,7 @@
 
   
   <!--- Share on Facebook -->
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fwelcome-to-jekyll%2F"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fufw-cheat-sheet%2F"
       class="btn btn-social-icon btn-facebook" title="Share on Facebook">
       <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
       <span class="sr-only">Facebook</span>
@@ -237,7 +367,7 @@
 
   
   <!--- Share on LinkedIn -->
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fwelcome-to-jekyll%2F"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fufw-cheat-sheet%2F"
       class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
       <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
       <span class="sr-only">LinkedIn</span>

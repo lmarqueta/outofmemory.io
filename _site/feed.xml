@@ -29,14 +29,14 @@
       </item>
     
       <item>
-        <title>Welcome to Jekyll!</title>
+        <title>ufw cheat sheet</title>
         <description>
-          
-          You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when...
+          The default firewall configuration tool for Ubuntu is ufw - 
+          From Ubuntu help: The default firewall configuration tool for Ubuntu is ufw. Developed to ease iptables firewall configuration, ufw provides a user friendly way to create an IPv4 or IPv6 host-based firewall. By default UFW is disabled. Basic ufw usage 1 2 3 4 5 6 7 8 9 10...
         </description>
-        <pubDate>Fri, 20 Sep 2019 00:00:00 +0200</pubDate>
-        <link>https://outofmemory.io/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">https://outofmemory.io/welcome-to-jekyll/</guid>
+        <pubDate>Wed, 08 Aug 2018 00:00:00 +0200</pubDate>
+        <link>https://outofmemory.io/ufw-cheat-sheet/</link>
+        <guid isPermaLink="true">https://outofmemory.io/ufw-cheat-sheet/</guid>
       </item>
     
       <item>
