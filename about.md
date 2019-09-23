@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-subtitle: Jack of all trades, master of none
+subtitle: You can't always apt-get what you want
 image: '/img/msdos.png'
 ---
 
@@ -16,5 +16,3 @@ Made with [Jekyll](https://jekyllrb.com) because:
 And using [beautiful-jekyll](https://github.com/daattali/beautiful-jekyll) theme (thanks [Dean Attali](https://deanattali.com))
 
 I may post in English, Spanish or something in between.
-
-_You can't always apt-get what you want_.
