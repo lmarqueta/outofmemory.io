@@ -8,10 +8,9 @@ image: /img/ubuntu-logo.png
 
 From [Ubuntu help](https://help.ubuntu.com/community/UFW):
 
-The default firewall configuration tool for Ubuntu is ufw. Developed to ease iptables firewall configuration, ufw provides a user friendly way to create an IPv4 or IPv6 host-based firewall. By default UFW is disabled.
+> The default firewall configuration tool for Ubuntu is ufw. Developed to ease iptables firewall configuration, ufw provides a user friendly way to create an IPv4 or IPv6 host-based firewall. By default UFW is disabled.
 
 ## Basic ufw usage
-
 
 {% highlight bash linenos %}
 # enable UFW
