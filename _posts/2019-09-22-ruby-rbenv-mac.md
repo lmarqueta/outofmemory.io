@@ -2,7 +2,7 @@
 layout: post
 title: Ruby (and Jekyll) on Mac
 subtitle: How to install a current version of Ruby on macOS Mojave
-tags: [macos, ruby, jekyll]
+tags: [jekyll, macOS, ruby]
 image: '/img/ruby-logo.png'
 ---
 

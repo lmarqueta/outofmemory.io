@@ -3,7 +3,7 @@ layout: post
 title:  Uso de netcat
 excerpt: Uso básico de netcat
 comments: true
-tags: [netcat, nc]
+tags: [netcat]
 ---
 ## netcat
 

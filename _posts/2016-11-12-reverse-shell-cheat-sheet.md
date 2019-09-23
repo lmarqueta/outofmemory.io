@@ -3,7 +3,7 @@ layout: post
 title:  Reverse shells
 excerpt: Reverse shell cheat sheet
 bigimg: '/img/reverse-shell.png'
-tags: [shell, netcat, security]
+tags: [netcat, security, shell]
 ---
 Situación: encontrado un método de RCE pero sin posibilidad de acceso a la shell. Solución: _bind_ de la shell a un puerto TCP.
 

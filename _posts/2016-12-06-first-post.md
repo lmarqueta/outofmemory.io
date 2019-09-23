@@ -3,6 +3,7 @@ layout: post
 title: First post!
 bigimg: '/img/some-code.jpg'
 social-share: false
+tags: [jekyll]
 ---
 
 This is my first post, how exciting!

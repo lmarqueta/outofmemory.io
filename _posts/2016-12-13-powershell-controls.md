@@ -2,8 +2,7 @@
 layout: post
 title: Saltándose los controles de la Powershell
 subtitle: Mecanismos de bypass para la PowerShell ExecutionPolicy
-tags: [security, powershell, microsoft]
-social-share: true
+tags: [microsoft, powershell, security]
 image: /img/powershell.png
 ---
 En una de las charlas a las que acude con frecuencia -bueno, creo que en varias :)-, [Pablo González] estuvo explicando diferentes posibilidades para ejecutar scripts en PowerShell "saltándose" los controles de ejecución (ExecutionPolicy).
