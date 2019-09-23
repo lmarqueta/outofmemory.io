@@ -21,7 +21,7 @@
         <title>OS lifecycle</title>
         <description>
           Release and EOL/EOSL dates for most common Operating Systems - 
-          Warning: Use at your own risk. CentOS OS name Release date EOL EOSL         Debian OS name Release date EOL EOSL         Red Hat OS name Release date EOL EOSL         Ubuntu OS name Release date EOL EOSL      ...
+          (Work in progress…) Warning: Use at your own risk. CentOS OS name Release date EOL EOSL CentOS 8       CentOS 7 2014/07/07 Q4 2020 2024/06/30 CentOS 6 2011/07/10 2017/07/10 2020/11/30 CentOS 5 2007/04/12 2014/03/31 2017/03/31 CentOS 4 2005/03/09 2009/03/31 2012/02/29 Debian OS name Release date EOL EOSL Debian...
         </description>
         <pubDate>Sat, 21 Sep 2019 00:00:00 +0200</pubDate>
         <link>https://outofmemory.io/os-lifecycle/</link>
