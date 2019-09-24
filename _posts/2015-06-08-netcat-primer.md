@@ -2,6 +2,7 @@
 layout: post
 title:  Uso de netcat
 excerpt: Uso básico de netcat
+image: '/img/terminal.png'
 comments: true
 tags: [netcat]
 ---

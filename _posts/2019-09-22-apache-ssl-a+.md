@@ -3,6 +3,7 @@ layout: post
 title: Qualys SSL A+
 subtitle: Getting an A+ with Apache and Let's Encrypt
 tags: [apache, ssl]
+image: '/img/a+.jpeg'
 comments: true
 ---
 

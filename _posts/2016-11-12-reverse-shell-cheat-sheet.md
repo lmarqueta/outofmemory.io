@@ -2,6 +2,7 @@
 layout: post
 title:  Reverse shells
 excerpt: Reverse shell cheat sheet
+image: '/img/terminal.png'
 bigimg: '/img/reverse-shell.png'
 tags: [netcat, security, shell]
 ---

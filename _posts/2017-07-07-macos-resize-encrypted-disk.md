@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Resize encrypted disk in macOS
-date: 2017-07-07
+image: '/img/macos-finder-icon.png'
 tags: [macOS]
 ---
 
