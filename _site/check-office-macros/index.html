@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Analyzing Office macros</title>
+
+  <meta name="author" content="Out of Memory" />
+
+  
+  <meta name="description" content="Preventing Emotet to infect everyone">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="https://outofmemory.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35700985-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-35700985-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Analyzing Office macros" />
+  
+
+   
+  <meta property="og:description" content="Preventing Emotet to infect everyone">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://outofmemory.io/check-office-macros/" />
+  <link rel="canonical" href="https://outofmemory.io/check-office-macros/" />
+  
+
+  
+  <meta property="og:image" content="https://outofmemory.io/img/spectrum.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Analyzing Office macros" />
+  
+
+  
+  <meta name="twitter:description" content="Preventing Emotet to infect everyone">
+  
+
+  
+  <meta name="twitter:image" content="https://outofmemory.io/img/spectrum.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://outofmemory.io/">outofmemory.io</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/tags">Tags</a></li>
+          <li><a href="/about">About</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://outofmemory.io/">
+	      <img class="avatar-img" src="/img/microsoft-office.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/emotet.jpg"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Analyzing Office macros</h1>
+		  
+		    
+			<h2 class="post-subheading">Preventing Emotet to infect everyone</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on September 28, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Analyzing Office macros</h1>
+		  
+		    
+			<h2 class="post-subheading">Preventing Emotet to infect everyone</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on September 28, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>With <a href="https://www.malwarebytes.com/emotet/">Emotet</a> hitting in the wild, analyzing Office files for potentially malicious macros is crucial.</p>
+
+<p>There is a well-known set of utilities by <a href="https://github.com/decalage2">Philippe Lagadec</a> called (python-oletools)[http://www.decalage.info/python/oletools]. Lots of services like <a href="https://github.com/cuckoosandbox/cuckoo">Cuckoo Sandbox</a>, <a href="https://www.hybrid-analysis.com/">Hybrid-analysis.com</a> and maybe even <a href="https://www.virustotal.com/">VirusTotal</a> are using it.</p>
+
+<p>According to the author:</p>
+
+<blockquote>
+  <p>python-oletools is a package of python tools to analyze Microsoft OLE2 files (also called Structured Storage, Compound File Binary Format or Compound Document File Format), such as Microsoft Office documents or Outlook messages, mainly for malware analysis, forensics and debugging. It is based on my olefile parser.</p>
+</blockquote>
+
+<h2 id="example-code">Example code</h2>
+
+<p><code class="highlighter-rouge">oletools</code> can be used as a CLI tool:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>olevba ../in/<span class="k">*</span>
+olevba 0.54.2 on Python 3.5.3 - http://decalage.info/python/oletools
+Flags        Filename                                                         
+<span class="nt">-----------</span>  <span class="nt">-----------------------------------------------------------------</span>
+OLE:MASI---- ../in/doc <span class="o">(</span>1<span class="o">)</span>.doc
+OpX:-------- ../in/foo.xlsx
+OpX:-------- ../in/2018.xlsx
+OLE:MASI---- ../in/invoice.doc
+OpX:-------- ../in/invoice <span class="o">(</span>2<span class="o">)</span>.docx
+TXT:M------- ../in/test.txt
+WARNING  msoffcrypto failed to interpret file ../in/test.txt or determine whether it is encrypted: Unsupported file format
+WARNING  Failed to check ../in/test.txt <span class="k">for </span>encryption <span class="o">(</span>not an OLE2 structured storage file<span class="o">)</span><span class="p">;</span> assume it is not encrypted.
+
+<span class="o">(</span>Flags: <span class="nv">OpX</span><span class="o">=</span>OpenXML, <span class="nv">XML</span><span class="o">=</span>Word2003XML, <span class="nv">FlX</span><span class="o">=</span>FlatOPC XML, <span class="nv">MHT</span><span class="o">=</span>MHTML, <span class="nv">TXT</span><span class="o">=</span>Text, <span class="nv">M</span><span class="o">=</span>Macros, <span class="nv">A</span><span class="o">=</span>Auto-executable, <span class="nv">S</span><span class="o">=</span>Suspicious keywords, <span class="nv">I</span><span class="o">=</span>IOCs, <span class="nv">H</span><span class="o">=</span>Hex strings, <span class="nv">B</span><span class="o">=</span>Base64 strings, <span class="nv">D</span><span class="o">=</span>Dridex strings, <span class="nv">V</span><span class="o">=</span>VBA strings, ?<span class="o">=</span>Unknown<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Take a look at the flags: aside from the type of document (OpenXML, Text, etc.) you can see the different patterns found like</p>
+
+<blockquote>
+  <p>auto-executable macros, suspicious VBA keywords used by malware, anti-sandboxing and anti-virtualization techniques, and potential IOCs (IP addresses, URLs, executable filenames, etc) (<a href="https://github.com/decalage2/oletools/wiki/olevba">see olevba documentation</a>)</p>
+</blockquote>
+
+<p>You can run triage for a single document:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>olevba <span class="nt">-t</span>  ../queue/2019N00002453<span class="se">\ \(</span>1<span class="se">\)</span>.doc |more
+olevba 0.54.2 on Python 3.5.3 - http://decalage.info/python/oletools
+Flags        Filename                                                         
+<span class="nt">-----------</span>  <span class="nt">-----------------------------------------------------------------</span>
+OLE:MASI---- ../queue/2019N00002453 <span class="o">(</span>1<span class="o">)</span>.doc
+</code></pre></div></div>
+
+<p>…or see the full details (default behaviour):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>olevba <span class="nt">-a</span> <span class="k">in</span>/invoice <span class="o">(</span>1<span class="o">)</span>.doc
+olevba 0.54.2 on Python 3.5.3 - http://decalage.info/python/oletools
+<span class="o">===============================================================================</span>
+FILE: <span class="k">in</span>/2019N00002453 <span class="o">(</span>1<span class="o">)</span>.doc
+Type: OLE
+<span class="nt">-------------------------------------------------------------------------------</span>
+VBA MACRO Paradigmfim.cls
+<span class="k">in </span>file: <span class="k">in</span>/2019N00002453 <span class="o">(</span>1<span class="o">)</span>.doc - OLE stream: <span class="s1">'Macros/VBA/Paradigmfim'</span>
+<span class="nt">-------------------------------------------------------------------------------</span>
+VBA MACRO Sleek_Soft_Pizzafwu.bas
+<span class="k">in </span>file: <span class="k">in</span>/2019N00002453 <span class="o">(</span>1<span class="o">)</span>.doc - OLE stream: <span class="s1">'Macros/VBA/Sleek_Soft_Pizzafwu'</span>
+<span class="nt">-------------------------------------------------------------------------------</span>
+VBA MACRO Frozenapw.bas
+<span class="k">in </span>file: <span class="k">in</span>/2019N00002453 <span class="o">(</span>1<span class="o">)</span>.doc - OLE stream: <span class="s1">'Macros/VBA/Frozenapw'</span>
++----------+--------------------+---------------------------------------------+
+|Type      |Keyword             |Description                                  |
++----------+--------------------+---------------------------------------------+
+|AutoExec  |autoopen            |Runs when the Word document is opened        |
+|Suspicious|virtual             |May detect virtualization                    |
+|Suspicious|ShowWindow          |May hide the application                     |
+|Suspicious|CreateObject        |May create an OLE object                     |
+|Suspicious|open                |May open a file                              |
+|Suspicious|system              |May run an executable file or a system       |
+|          |                    |command on a Mac <span class="o">(</span><span class="k">if </span>combined with           |
+|          |                    |libc.dylib<span class="o">)</span>                                  |
+|IOC       |https://www.microsof|URL                                          |
+|          |t.com/library/errorp|                                             |
+|          |ages/smarterror.aspx|                                             |
+|          |?correlationId<span class="o">=</span>gener|                                             |
+|          |atejjt              |                                             |
+</code></pre></div></div>
+
+<p>You can also extract macros, unzip zipped documents (even with password), etc. Complete documentation is available.</p>
+
+<h2 id="use-as-a-python-module">Use as a Python module</h2>
+
+<p><code class="highlighter-rouge">oletools</code> can be used as a Python module as well. For example, this piece of code:</p>
+
+<pre><code class="language-Python">#!/usr/bin/env python3
+
+import sys
+import os
+import json
+from oletools.olevba import VBA_Parser
+
+def scan(filename):
+    score = {}
+    try:
+        vbaparser = VBA_Parser(filename)
+    except:
+        print("File type not supported")
+        sys.exit(1)
+
+    if vbaparser.detect_vba_macros():
+        print("Parsing {}".format(filename))
+        results = vbaparser.analyze_macros()
+        vbaparser.close()
+
+        # for kw_type, keyword, description in results:
+        #     print('type={} - keyword={} - description={}'.format(kw_type, keyword, description))
+        # print(results)
+
+        for kw_type, keyword, description in results:
+            if not kw_type in score:
+                score[kw_type] = 1
+            else:
+                score[kw_type] += 1
+            # print('type={} - keyword={}'.format(kw_type, description))
+        for k in score:
+            print(k, score[k])
+    else:
+        print('No VBA Macros found')
+
+
+def main(filename):
+    if os.path.isfile(filename):
+        scan(filename)
+    else:
+        print("{} does not exist".format(filename))
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main(sys.argv[1])
+</code></pre>
+
+<p>will output:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./analysis.py ../queue/invoice.doc
+IOC 94
+AutoExec 1
+Suspicious 5
+</code></pre></div></div>
+
+<p>You can <a href="https://gist.github.com/lmarqueta/0d034bc920fc9d7a363843441f34118d">get the code at gist</a></p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://www.us-cert.gov/ncas/alerts/TA18-201A">US-CERT Alert (TA18-201A) Emotet Malware</a></li>
+</ul>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#emotet">emotet</a>
+          
+            <a href="/tags#malware">malware</a>
+          
+            <a href="/tags#oletools">oletools</a>
+          
+            <a href="/tags#python">python</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Analyzing+Office+macros&url=https%3A%2F%2Foutofmemory.io%2Fcheck-office-macros%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fcheck-office-macros%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fcheck-office-macros%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ruby-rbenv-mac/" data-toggle="tooltip" data-placement="top" title="Ruby (and Jekyll) on Mac">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:outofmemory.io@protonmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/lmarqueta" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/outofmemory_io" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Out of Memory
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="https://outofmemory.io/">outofmemory.io</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#252e39"
+      },
+      "button": {
+        "background": "#14a7d0"
+      }
+    },
+    "theme": "classic"
+  });
+  </script>
+  </body>
+</html>
