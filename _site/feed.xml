@@ -7,6 +7,17 @@
     <atom:link href="https://outofmemory.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Thunderbird + Enigmail in macOS</title>
+        <description>
+          Dance Like Nobody's Watching. Encrypt Like Everyone Is. - 
+          Since some time ago Enigmail plugin for Thunderbird requires a working installation of GPG tools, including a graphical pinentry to be able to ask for the key passphrase. It seems not to be available by default. To solve it, install a graphical pinentry: brew install pinentry-mac echo &quot;use-standard-socket pinentry-program /usr/local/bin/pinentry-mac&quot;...
+        </description>
+        <pubDate>Thu, 03 Oct 2019 00:00:00 +0200</pubDate>
+        <link>https://outofmemory.io/macos-enigmail/</link>
+        <guid isPermaLink="true">https://outofmemory.io/macos-enigmail/</guid>
+      </item>
+    
+      <item>
         <title>Analyzing Office macros</title>
         <description>
           Preventing Emotet to infect everyone - 

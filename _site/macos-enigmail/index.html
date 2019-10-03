@@ -7,12 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
-  <title>outofmemory.io - You can't always apt-get what you want</title>
+  <title>Thunderbird + Enigmail in macOS</title>
 
   <meta name="author" content="Out of Memory" />
 
   
-  <meta name="description" content="You can't always apt-get what you want">
+  <meta name="description" content="Dance Like Nobody's Watching. Encrypt Like Everyone Is.">
   
 
   <link rel="alternate" type="application/rss+xml" title="outofmemory.io - You can't always apt-get what you want" href="https://outofmemory.io/feed.xml" />
@@ -71,19 +71,19 @@
   
 
   
-  <meta property="og:title" content="Out of Memory" />
+  <meta property="og:title" content="Thunderbird + Enigmail in macOS" />
   
 
    
-  <meta property="og:description" content="You can't always apt-get what you want">
+  <meta property="og:description" content="Dance Like Nobody's Watching. Encrypt Like Everyone Is.">
   
 
 
   <meta property="og:type" content="website" />
 
   
-  <meta property="og:url" content="https://outofmemory.io/page2/" />
-  <link rel="canonical" href="https://outofmemory.io/page2/" />
+  <meta property="og:url" content="https://outofmemory.io/macos-enigmail/" />
+  <link rel="canonical" href="https://outofmemory.io/macos-enigmail/" />
   
 
   
@@ -97,11 +97,11 @@
   <meta name="twitter:creator" content="@" />
 
   
-  <meta name="twitter:title" content="Out of Memory" />
+  <meta name="twitter:title" content="Thunderbird + Enigmail in macOS" />
   
 
   
-  <meta name="twitter:description" content="You can't always apt-get what you want">
+  <meta name="twitter:description" content="Dance Like Nobody's Watching. Encrypt Like Everyone Is.">
   
 
   
@@ -140,7 +140,7 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
 	    <a href="https://outofmemory.io/">
-	      <img class="avatar-img" src="/img/spectrum.png" />
+	      <img class="avatar-img" src="/img/enigmail.png" />
 		</a>
 	  </div>
 	</div>
@@ -162,15 +162,16 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-heading">
-          <h1>Out of Memory</h1>
+        <div class="post-heading">
+          <h1>Thunderbird + Enigmail in macOS</h1>
 		  
 		    
-            <hr class="small">
-            <span class="page-subheading">You can't always apt-get what you want</span>
+			<h2 class="post-subheading">Dance Like Nobody's Watching. Encrypt Like Everyone Is.</h2>
 			
 		  
 		  
+		  
+		  <span class="post-meta">Posted on October 3, 2019</span>
 		  
         </div>
       </div>
@@ -183,258 +184,116 @@
 
 
 
-<div class="container" role="main">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <div class="posts-list">
-  
-  <article class="post-preview">
-    <a href="/ufw-cheat-sheet/">
-	  <h2 class="post-title">ufw cheat sheet</h2>
 
-	  
-	  <h3 class="post-subtitle">
-	    The default firewall configuration tool for Ubuntu is ufw
-	  </h3>
-	  
-    </a>
+      
 
-    <p class="post-meta">
-      Posted on August 8, 2018
-    </p>
+      <article role="main" class="blog-post">
+        <p>Since some time ago <a href="https://www.enigmail.net/">Enigmail</a> plugin for Thunderbird requires a working installation of GPG tools, including a graphical pinentry to be able to ask for the key passphrase.</p>
 
-    <div class="post-entry-container">
-      
-      <div class="post-image">
-        <a href="/ufw-cheat-sheet/">
-          <img src="/img/ubuntu-logo.png">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        From Ubuntu help:
+<p>It seems not to be available by default.</p>
 
+<p>To solve it, install a graphical pinentry:</p>
 
-        
-        
-          <a href="/ufw-cheat-sheet/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install pinentry-mac
+<span class="nb">echo</span> <span class="s2">"use-standard-socket
+pinentry-program /usr/local/bin/pinentry-mac"</span> <span class="o">&gt;&gt;</span> ~/.gnupg/gpg-agent.conf
+killall gpg-agent
+</code></pre></div></div>
 
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#iptables">iptables</a>
-      
-      <a href="/tags#security">security</a>
-      
-      <a href="/tags#ubuntu">ubuntu</a>
-      
-      <a href="/tags#ufw">ufw</a>
-      
-      
-    </div>
-    
+<p>And you are good to go.</p>
 
-   </article>
-  
-  <article class="post-preview">
-    <a href="/macos-resize-encrypted-disk/">
-	  <h2 class="post-title">Resize encrypted disk in macOS</h2>
+<h2 id="references">References</h2>
 
-	  
-    </a>
-
-    <p class="post-meta">
-      Posted on July 7, 2017
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-image">
-        <a href="/macos-resize-encrypted-disk/">
-          <img src="/img/macos-finder-icon.png">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        To increase size of volume Encrypted in 250 MB:
-
-
-        
-        
-          <a href="/macos-resize-encrypted-disk/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#macOS">macOS</a>
-      
-      
-    </div>
-    
-
-   </article>
-  
-  <article class="post-preview">
-    <a href="/powershell-controls/">
-	  <h2 class="post-title">Saltándose los controles de la Powershell</h2>
-
-	  
-	  <h3 class="post-subtitle">
-	    Mecanismos de bypass para la PowerShell ExecutionPolicy
-	  </h3>
-	  
-    </a>
-
-    <p class="post-meta">
-      Posted on December 13, 2016
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-image">
-        <a href="/powershell-controls/">
-          <img src="/img/powershell.png">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        En una de las charlas a las que acude con frecuencia -bueno, creo que en varias :)-, Pablo González estuvo explicando diferentes posibilidades para ejecutar scripts en PowerShell “saltándose” los controles de ejecución (ExecutionPolicy).
-
-
-        
-        
-          <a href="/powershell-controls/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#microsoft">microsoft</a>
-      
-      <a href="/tags#powershell">powershell</a>
-      
-      <a href="/tags#security">security</a>
-      
-      
-    </div>
-    
-
-   </article>
-  
-  <article class="post-preview">
-    <a href="/first-post/">
-	  <h2 class="post-title">First post!</h2>
-
-	  
-    </a>
-
-    <p class="post-meta">
-      Posted on December 6, 2016
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        This is my first post, how exciting!
-
-
-        
-        
-          <a href="/first-post/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#jekyll">jekyll</a>
-      
-      
-    </div>
-    
-
-   </article>
-  
-  <article class="post-preview">
-    <a href="/reverse-shell-cheat-sheet/">
-	  <h2 class="post-title">Reverse shells</h2>
-
-	  
-    </a>
-
-    <p class="post-meta">
-      Posted on November 12, 2016
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-image">
-        <a href="/reverse-shell-cheat-sheet/">
-          <img src="/img/terminal.png">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        Reverse shell cheat sheet
-        
-        
-          <a href="/reverse-shell-cheat-sheet/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      
-      <a href="/tags#netcat">netcat</a>
-      
-      <a href="/tags#security">security</a>
-      
-      <a href="/tags#shell">shell</a>
-      
-      
-    </div>
-    
-
-   </article>
-  
-</div>
-
-
-<ul class="pager main-pager">
-  
-  <li class="previous">
-    <a href="/">&larr; Newer Posts</a>
-  </li>
-  
-  
-  <li class="next">
-    <a href="/page3">Older Posts &rarr;</a>
-  </li>
-  
+<ul>
+  <li><a href="http://www.harpojaeger.com/2017/09/20/enigmail-gnupg-pinentry-on-mac-os-x-using-homebrew">Engimail, gnupg &amp; pinentry on Mac OS X using Homebrew</a></li>
 </ul>
 
+      </article>
 
-	    
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#macOS">macOS</a>
+          
+            <a href="/tags#enigmail">enigmail</a>
+          
+            <a href="/tags#pgp">pgp</a>
+          
+            <a href="/tags#thunderbird">thunderbird</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Thunderbird+%2B+Enigmail+in+macOS&url=https%3A%2F%2Foutofmemory.io%2Fmacos-enigmail%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Foutofmemory.io%2Fmacos-enigmail%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Foutofmemory.io%2Fmacos-enigmail%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/check-office-macros/" data-toggle="tooltip" data-placement="top" title="Analyzing Office macros">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
     </div>
   </div>
 </div>
