@@ -1,17 +1,17 @@
 # --- General options --- #
 
 # Name of website
-title: outofmemory.io
+title: INS3CURE.COM
 
 # Short description of your site
-description: You can't always apt-get what you want
+description: You'd better check your buckets before someone else does
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
 # *** If you're not sure what this mean, then leave this section as it is. Only modify the url and baseurl if you know what you're doing!***
 
 # url is the the website domain URL without a trailing slash
-url: "https://outofmemory.io"
+url: "https://ins3cure.com"
 
 # baseurl should be an empty string
 baseurl: ""
@@ -61,7 +61,7 @@ footer-link-col: "#404040"
 # Change all these values or delete the ones you don't want.
 # Important: you must keep the "name" parameter, everything else you can remove
 author:
-  name: Out of Memory
+  name: INS3CURE
 
 # Select your active Social Network Links.
 # Uncomment the links you want to show in the footer and add your information to each link.
@@ -69,10 +69,10 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
   rss: true
-  email: "outofmemory.io@protonmail.com"
+  email: "me@ins3cure.com"
   # facebook: deanattali
-  github: lmarqueta
-  twitter: outofmemory_io
+  github: ins3curity
+  twitter: ins3cure_com
 #  reddit: yourname
 #  linkedin: daattali
 #  xing: yourname
@@ -94,7 +94,7 @@ share-links-active:
 
 # How to display the link to the website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "outofmemory.io"  # eg. "deanattali.com/beautiful-jekyll"
+url-pretty: "ins3cure.com"  # eg. "deanattali.com/beautiful-jekyll"
 
 # --- Web Statistics Section --- #
 
@@ -196,6 +196,7 @@ exclude:
   - LICENSE
   - README.md
   - Vagrantfile
+  - vendor
 
 # prose.io config
 prose:

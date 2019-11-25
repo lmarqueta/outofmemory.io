@@ -4,6 +4,8 @@
 .jekyll-metadata
 Gemfile.lock
 .foo
+vendor
+.bundle
 
 ### Atom ###
 .ftpconfig

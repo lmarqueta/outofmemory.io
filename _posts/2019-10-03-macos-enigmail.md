@@ -20,7 +20,7 @@ pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 killall gpg-agent
 ```
 
-And you are good to go.
+And you're good to go.
 
 ## References
 
